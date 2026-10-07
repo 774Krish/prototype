@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio - Hero & About</title>
+  <!-- Modern clean font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <!-- With JS disabled the loader could never be dismissed, so it is
+       suppressed outright rather than left covering the page. The rule
+       lives in noscript.css, which only ever loads from inside <noscript>. -->
+  <noscript>
+    <link rel="stylesheet" href="noscript.css" />
+  </noscript>
+</head>
+<body>
+
+  <!-- Runs before anything below is parsed or painted, so the saved theme is
+       already on <body> when the loader first appears. Without this the
+       loader would flash dark for light-mode visitors, since the theme is
+       otherwise applied much later by script.js at the end of the body.
+       Shared by every page — see theme-init.js. -->
+  <script src="theme-init.js"></script>
+
+  <!-- Loading overlay: in the markup from the first frame, dismissed by
+       script.js once the page has actually finished loading -->
+  <div id="loader" role="status" aria-label="Welcome, loading page">
+    <div class="loader-inner">
+      <div class="loader-title">Welcome</div>
+      <div class="loader-track"><div class="loader-bar"></div></div>
+    </div>
+  </div>
+
+  <!-- Custom cursor layers (dot + trailing ring) -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Floating Particles background -->
+  <div class="bg-particles">
+    <div class="particle p1"></div>
+    <div class="particle p2"></div>
+    <div class="particle p3"></div>
+    <div class="particle p4"></div>
+    <div class="particle p5"></div>
+  </div>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="logo">Portfolio</div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#works">Works</a>
+      <a href="#contact">Contact</a>
+      <!-- role="switch" + aria-checked is what makes this a real toggle for
+           screen readers; the browser cannot infer that from the markup. -->
+      <button id="theme-switch" class="theme-switch" type="button"
+              role="switch" aria-checked="false" aria-label="Toggle light mode">
+        <span class="theme-label theme-label-dark">Dark</span>
+        <span class="switch-track" aria-hidden="true"><span class="switch-knob"></span></span>
+        <span class="theme-label theme-label-light">Light</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+ <section class="hero">
+  <!-- 3D Matrix backdrop (animated wireframe grid) -->
+  <div class="matrix-3d-wrapper">
+    <canvas id="matrix3DCanvas"></canvas>
+  </div>
+
+  <div class="hero-content">
+    <span class="tagline">NAVIGATING VARIOUS CAREERS</span>
+    <h1 class="main-title">Ashreet Kapali</h1>
+    <p class="description">
+      Crafting bold, immersive digital experiences with modern web technologies.
+    </p>
+    <div class="cta-group">
+      <a href="#about" class="btn btn-primary">Learn About Me</a>
+      <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+    </div>
+  </div>
+</section>
+
+  
+
+  <!-- =========================================================
+       Works section
+       #works here and href="#works" in the nav are the two halves of the
+       scroll target — rename one and the nav link silently does nothing.
+
+       The cards below are placeholders. Replace each title, description
+       and tag list with real projects. A card that links somewhere is an
+       <a class="work-card" href="...">; one that doesn't is an
+       <article class="work-card">. Both are styled identically, and the
+       custom cursor grows over either one.
+       ========================================================= -->
+  <section id="works" class="works-section">
+    <div class="works-header">
+      <span class="section-label">SELECTED WORK</span>
+      <h2 class="works-title">Things I've been building</h2>
+      <p class="works-subtitle">
+        A mix of coursework, experiments and side projects — mostly where
+        medicine and code overlap.
+      </p>
+    </div>
+
+    <div class="works-grid">
+      <!-- Relative href: each demo page sits beside this file, and all the
+           pages share the style.css / script.js next to them. -->
+      <a class="work-card" href="cursor-demo.html">
+        <!-- aria-hidden: the number is decoration, the title is the label -->
+        <div class="work-thumb" aria-hidden="true">01</div>
+        <div class="work-body">
+          <h3 class="work-title">Custom cursor</h3>
+          <p class="work-desc">
+            A dot that tracks the pointer exactly, with an ice-blue ring that
+            eases along behind it — plus hover, press and theme-aware states.
+          </p>
+          <ul class="work-tags">
+            <li>JavaScript</li><li>Pointer events</li><li>rAF</li>
+          </ul>
+          <span class="work-cta">Open the demo <span aria-hidden="true">→</span></span>
+        </div>
+      </a>
+
+      
+
+      <a class="work-card" href="webpage-anatomy.html">
+        <div class="work-thumb" aria-hidden="true">04</div>
+        <div class="work-body">
+          <h3 class="work-title">Anatomy of a webpage</h3>
+          <p class="work-desc">
+            A miniature page you can dissect — hover any region and it is
+            labelled with its name, its element and what it is there for.
+          </p>
+          <ul class="work-tags">
+            <li>HTML semantics</li><li>Interaction</li><li>Teaching</li>
+          </ul>
+          <span class="work-cta">Open the demo <span aria-hidden="true">→</span></span>
+        </div>
+      </a>
+    </div>
+  </section>
+  <script src="script.js"></script>
+</body>
+</html>
