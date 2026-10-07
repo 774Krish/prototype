@@ -18,15 +18,8 @@
 </head>
 <body>
 
-  <!-- Runs before anything below is parsed or painted, so the saved theme is
-       already on <body> when the loader first appears. Without this the
-       loader would flash dark for light-mode visitors, since the theme is
-       otherwise applied much later by script.js at the end of the body.
-       Shared by every page — see theme-init.js. -->
-  <script src="theme-init.js"></script>
+   <script src="theme-init.js"></script>
 
-  <!-- Loading overlay: in the markup from the first frame, dismissed by
-       script.js once the page has actually finished loading -->
   <div id="loader" role="status" aria-label="Welcome, loading page">
     <div class="loader-inner">
       <div class="loader-title">Welcome</div>
@@ -34,11 +27,9 @@
     </div>
   </div>
 
-  <!-- Custom cursor layers (dot + trailing ring) -->
   <div class="cursor-dot" aria-hidden="true"></div>
   <div class="cursor-ring" aria-hidden="true"></div>
 
-  <!-- Floating Particles background -->
   <div class="bg-particles">
     <div class="particle p1"></div>
     <div class="particle p2"></div>
@@ -47,15 +38,13 @@
     <div class="particle p5"></div>
   </div>
 
-  <!-- Top Navigation Header -->
   <header>
     <div class="logo">Portfolio</div>
     <nav>
       <a href="#about">About</a>
       <a href="#works">Works</a>
       <a href="#contact">Contact</a>
-      <!-- role="switch" + aria-checked is what makes this a real toggle for
-           screen readers; the browser cannot infer that from the markup. -->
+     
       <button id="theme-switch" class="theme-switch" type="button"
               role="switch" aria-checked="false" aria-label="Toggle light mode">
         <span class="theme-label theme-label-dark">Dark</span>
@@ -65,9 +54,8 @@
     </nav>
   </header>
 
-  <!-- Hero Section -->
  <section class="hero">
-  <!-- 3D Matrix backdrop (animated wireframe grid) -->
+  
   <div class="matrix-3d-wrapper">
     <canvas id="matrix3DCanvas"></canvas>
   </div>
@@ -86,18 +74,6 @@
 </section>
 
   
-
-  <!-- =========================================================
-       Works section
-       #works here and href="#works" in the nav are the two halves of the
-       scroll target — rename one and the nav link silently does nothing.
-
-       The cards below are placeholders. Replace each title, description
-       and tag list with real projects. A card that links somewhere is an
-       <a class="work-card" href="...">; one that doesn't is an
-       <article class="work-card">. Both are styled identically, and the
-       custom cursor grows over either one.
-       ========================================================= -->
   <section id="works" class="works-section">
     <div class="works-header">
       <span class="section-label">SELECTED WORK</span>
