@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anatomy of a Webpage — Ashreet Kapali</title>
+  <meta name="description" content="A labelled diagram of a webpage: hover any region to see what it is called, which element it stands for, and why it exists." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <!-- Shared stylesheet, reused as-is from beside this file. The theme
+       palette, the fixed header, the custom cursor and both themes all come
+       from here, so this page cannot drift away from the rest of the site. -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- The index of parts is generated from the markup, so with JS off there
+       would be a heading over an empty grid. Hide it rather than show a
+       promise the page cannot keep. The rule lives in noscript.css, which
+       only ever loads from inside <noscript>. -->
+  <noscript>
+    <link rel="stylesheet" href="noscript.css" />
+  </noscript>
+</head>
+<body>
+
+  <!-- Runs before anything below is parsed or painted, so the saved theme
+       is already on <body> on the first frame. Shared by every page — see
+       theme-init.js. -->
+  <script src="theme-init.js"></script>
+
+  <!-- Required by the cursor code in script.js — without both of these
+       present, the cursor block returns early. -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <header>
+    <div class="logo">Anatomy of a Webpage</div>
+    <nav>
+      <a class="anatomy-back" href="index.html">← Back to portfolio</a>
+      <button id="theme-switch" class="theme-switch" type="button"
+              role="switch" aria-checked="false" aria-label="Toggle light mode">
+        <span class="theme-label theme-label-dark">Dark</span>
+        <span class="switch-track" aria-hidden="true"><span class="switch-knob"></span></span>
+        <span class="theme-label theme-label-light">Light</span>
+      </button>
+    </nav>
+  </header>
+
+  <main class="anatomy-main">
+    <span class="section-label">EXPERIMENT 02</span>
+    <h1 class="anatomy-title">Anatomy of a webpage</h1>
+    <p class="anatomy-lead">
+      A webpage is a body made of parts, and every part has a name. Hover any
+      region of the page below and it will be labelled — what it is called,
+      which HTML element it stands for, and what it is actually there to do.
+    </p>
+
+    <div class="anatomy-toolbar">
+      <button id="labelToggle" class="anatomy-toggle" type="button" aria-pressed="false">
+        <span class="toggle-dot" aria-hidden="true"></span>
+        <span id="labelToggleText">Show all labels</span>
+      </button>
+      <span class="anatomy-hint anatomy-hint-pointer">
+        Hover to identify. Click a part to pin it.
+      </span>
+      <span class="anatomy-hint anatomy-hint-touch">
+        Tap a part to identify it. Pinch and zoom to read the small print.
+      </span>
+    </div>
+
+    <div class="anatomy-layout">
+      <!-- =============================================================
+           The diagram.
+
+           Note the deliberate absence of semantic tags inside the mock.
+           style.css styles bare `header` and `nav` globally (the real page
+           header is position: fixed), so a literal <header> in here would
+           tear the diagram apart. The mock uses plain divs and carries the
+           real tag name as text in data-tag instead, which is what the
+           inspector shows.
+           ============================================================= -->
+      <div class="anatomy-stage" id="anatomyStage">
+
+        <div class="mock-frame">
+
+          <!-- Browser chrome -->
+          <div class="mock-chrome">
+            <div class="mock-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+
+            <div class="part mock-tab"
+                 data-label="Browser tab"
+                 data-tag="&lt;title&gt;"
+                 data-desc="The name on the tab, in the taskbar, and in every bookmark or shared link. It comes from the title element in the head, and it is the first thing anyone reads about the page.">
+              <span class="mock-favicon" aria-hidden="true"></span>
+              <span class="m-tab-name">Anatomy — a page tour</span>
+            </div>
+
+            <div class="part mock-url"
+                 data-label="Address bar"
+                 data-tag="URL"
+                 data-desc="The page's address. The head also decides what search engines show in this slot: the meta description, the canonical link, and the favicon beside it.">
+              <span aria-hidden="true">🔒</span>
+              <span>https://example.com/anatomy</span>
+            </div>
+          </div>
+
+          <!-- =========================================================
+               The page itself. This wrapper is labelled too — it is the
+               body element, and hovering any gap inside it falls back to
+               naming the page rather than naming nothing.
+               ========================================================= -->
+          <div class="part mock-page" id="mockPage"
+               data-label="Document body"
+               data-tag="&lt;body&gt;"
+               data-desc="Everything a visitor can see lives in the body. The head — title, meta tags, stylesheets, scripts — is never rendered at all, which is exactly why it is so easy to forget.">
+
+            <!-- 1. Announcement -->
+            <div class="part m-announce"
+                 data-label="Announcement bar"
+                 data-tag="&lt;div role=&quot;region&quot;&gt;"
+                 data-desc="A thin strip above the header for news with an expiry date. It sits first in the DOM so a screen reader meets it before the navigation, and it is the first thing a returning visitor can dismiss.">
+              <span>Everything here is labelled — go on, poke it</span>
+              <span aria-hidden="true">✕</span>
+            </div>
+
+            <!-- 2. Header -->
+            <div class="part m-header"
+                 data-label="Site header"
+                 data-tag="&lt;header&gt;"
+                 data-desc="The bar that stays with the visitor, usually sticky or fixed. Identity on one side, wayfinding on the other. It is the only part of the page a visitor can reach from anywhere.">
+
+              <div class="part m-logo"
+                   data-label="Logo / wordmark"
+                   data-tag="&lt;a class=&quot;logo&quot;&gt;"
+                   data-desc="The brand mark, and almost always a link home. Clicking the logo to return to the start is a convention so strong that people try it before reading anything else.">
+                Anatomy
+              </div>
+
+              <div class="part m-nav"
+                   data-label="Primary navigation"
+                   data-tag="&lt;nav&gt;"
+                   data-desc="The top-level menu. One nav element per page is the usual rule; a second one is fine when it is genuinely different, such as breadcrumbs or pagination, as long as each is labelled.">
+                <span class="m-link">Product</span>
+                <span class="m-link">Pricing</span>
+                <span class="m-link">Docs</span>
+              </div>
+
+              <div class="part m-nav-cta"
+                   data-label="Header action"
+                   data-tag="&lt;button&gt;"
+                   data-desc="One high-intent action — sign in, start free, get in touch. One, not four: the header is for orientation, and a second menu in the corner just splits attention.">
+                Sign in
+              </div>
+            </div>
+
+            <!-- 3. Hero -->
+            <div class="part m-hero"
+                 data-label="Hero section"
+                 data-tag="&lt;section class=&quot;hero&quot;&gt;"
+                 data-desc="The first screenful, and the most expensive real estate on the page. It has to answer three questions before anyone scrolls: what is this, who is it for, and what do I do next.">
+
+              <div>
+                <span class="part m-eyebrow"
+                      data-label="Eyebrow / tagline"
+                      data-tag="&lt;span class=&quot;eyebrow&quot;&gt;"
+                      data-desc="A short label above the headline that frames it — a category, a version, a claim. Purely supportive, so it stays visually quiet and is never the thing that carries the message.">New for 2026</span>
+
+                <div class="part m-h1"
+                     data-label="Headline"
+                     data-tag="&lt;h1&gt;"
+                     data-desc="The single most important sentence on the page, and the only h1. It should still make sense read aloud on its own, because that is exactly how a search engine and a screen reader meet it.">
+                  Everything a page is made of
+                </div>
+
+                <div class="part m-sub"
+                     data-label="Subheadline"
+                     data-tag="&lt;p&gt;"
+                     data-desc="A line or two that expands the headline. If it needs three lines to land, the headline is doing too little of the work — fix the headline instead of growing this.">
+                  Thirty-six parts, one page, each one named and explained as you hover it.
+                </div>
+
+                <div class="part m-btns"
+                     data-label="Button group"
+                     data-tag="&lt;div class=&quot;cta-group&quot;&gt;"
+                     data-desc="The primary action plus one alternative. Filled for the main path, outlined for the cautious one — two filled buttons side by side is a question, not a choice.">
+                  <span class="m-btn m-btn-p">Start reading</span>
+                  <span class="m-btn m-btn-s">Skip ahead</span>
+                </div>
+              </div>
+
+              <div class="part m-visual"
+                   data-label="Hero media"
+                   data-tag="&lt;img&gt; / &lt;canvas&gt;"
+                   data-desc="The supporting visual. Give it real alt text when it carries meaning and alt=&quot;&quot; when it is decoration, and always set width and height so nothing on the page jumps while it loads."
+                   aria-hidden="true">◍</div>
+            </div>
+
+            <!-- 4. Breadcrumb -->
+            <div class="part m-crumbs"
+                 data-label="Breadcrumb"
+                 data-tag="&lt;nav aria-label=&quot;breadcrumb&quot;&gt;"
+                 data-desc="Shows where this page sits in the hierarchy and gives one-click steps back up it. Cheap to add, and worth its weight the moment a site grows past two levels.">
+              <span>Home</span><span aria-hidden="true">/</span>
+              <span>Library</span><span aria-hidden="true">/</span>
+              <span class="m-crumb-cur">Anatomy</span>
+            </div>
+
+            <!-- 5. Content section -->
+            <div class="part m-section"
+                 data-label="Content section"
+                 data-tag="&lt;section&gt;"
+                 data-desc="A themed band of related content. Wrapping things in a section means little on its own — it is the heading inside it that turns the grouping into something a screen reader can navigate.">
+
+              <div class="part m-h2"
+                   data-label="Section heading"
+                   data-tag="&lt;h2&gt;"
+                   data-desc="Headings are the page outline. They nest in order — h1, then h2, then h3 — and are never chosen for their size, because size is a styling decision and structure is not.">
+                Structure, top to bottom
+              </div>
+
+              <div class="part m-p"
+                   data-label="Body copy"
+                   data-tag="&lt;p&gt;"
+                   data-desc="Reading text. Keep the measure somewhere between 45 and 75 characters and the line height generous. Everything on this miniature page is set far smaller than it would be in production.">
+                Each band below is a part of the page. The numbers match the index at the end, so you can go the other way round too.
+              </div>
+
+              <div class="part m-grid"
+                   data-label="Card grid"
+                   data-tag="&lt;div class=&quot;grid&quot;&gt;"
+                   data-desc="A repeating layout. CSS Grid with auto-fit and minmax lets the same markup flow from one column to four without a single media query, which is why card grids are the standard pattern.">
+
+                <div class="part m-card"
+                     data-label="Card"
+                     data-tag="&lt;article&gt;"
+                     data-desc="One self-contained item. The test for an article is whether it would still make sense lifted out and pasted somewhere else — if it would not, it is a div wearing a costume.">
+                  <div class="part m-thumb"
+                       data-label="Card media"
+                       data-tag="&lt;img&gt;"
+                       data-desc="The thumbnail. A fixed aspect ratio is what stops a row of cards going ragged when one image happens to be a different shape from its neighbours."
+                       aria-hidden="true"></div>
+                  <div class="m-card-body">
+                    <div class="part m-card-title"
+                         data-label="Card title"
+                         data-tag="&lt;h3&gt;"
+                         data-desc="The card's own heading, nested under the section's h2. In production the whole card usually becomes the link, which gives a large and forgiving hit area.">
+                      Header &amp; navigation
+                    </div>
+                    <div class="part m-card-text"
+                         data-label="Card text"
+                         data-tag="&lt;p&gt;"
+                         data-desc="A short summary. Two lines is the sweet spot; when a card needs a paragraph, the card is usually the wrong component and the content wants its own page.">
+                      Where the visitor gets their bearings.
+                    </div>
+                    <ul class="part m-tags"
+                        data-label="Tag list"
+                        data-tag="&lt;ul&gt;"
+                        data-desc="Small metadata — a category, a stack, a status. Marked up as a list rather than a row of spans, because it genuinely is a list of things and assistive tech should say so.">
+                      <li>Layout</li><li>Wayfinding</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Deliberately unlabelled: one annotated card is enough,
+                     and a second one would double the index for no new idea. -->
+                <div class="m-card">
+                  <div class="m-thumb" aria-hidden="true"></div>
+                  <div class="m-card-body">
+                    <div class="m-card-title">Forms &amp; tables</div>
+                    <div class="m-card-text">Where the page stops talking and starts asking.</div>
+                    <ul class="m-tags"><li>Input</li><li>Data</li></ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. Form band -->
+            <div class="part m-form-band"
+                 data-label="Signup form"
+                 data-tag="&lt;form&gt;"
+                 data-desc="The form element wraps its own fields and its own submit button, which is what lets the browser do its part: Enter submits, autofill works, and the built-in validation messages make sense.">
+              <div>
+                <div class="m-h2">Get the checklist</div>
+                <div class="m-p">One email, one page, no follow-up sequence.</div>
+              </div>
+              <div>
+                <div class="part m-field"
+                     data-label="Field label"
+                     data-tag="&lt;label for=&quot;email&quot;&gt;"
+                     data-desc="Tied to its input by matching for and id attributes. A label that exists only as a placeholder vanishes the moment someone starts typing, and placeholders are not read out reliably in the first place.">
+                  Email address
+                </div>
+                <div class="part m-input"
+                     data-label="Text input"
+                     data-tag="&lt;input type=&quot;email&quot;&gt;"
+                     data-desc="The right type buys real behaviour for free: a matching keyboard on phones, format checking before submission, and autofill from whatever the browser already knows.">
+                  you@example.com
+                </div>
+                <div class="part m-submit"
+                     data-label="Submit button"
+                     data-tag="&lt;button type=&quot;submit&quot;&gt;"
+                     data-desc="Inside a form, a button defaults to submit. Its label should say what happens next — &quot;Send the checklist&quot; tells you what you get, &quot;Submit&quot; just tells you that you are in a form.">
+                  Send it
+                </div>
+              </div>
+            </div>
+
+            <!-- 7. Table -->
+            <div class="m-section">
+              <div class="m-h2">Recent activity</div>
+              <table class="part m-table"
+                     data-label="Data table"
+                     data-tag="&lt;table&gt;"
+                     data-desc="For data that genuinely has rows and columns. Real table markup, with th for the headers, is what lets a screen reader announce which column a cell belongs to instead of reading a wall of numbers.">
+                <thead>
+                  <tr><th>Component</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Header</td><td>Shipped</td></tr>
+                  <tr><td>Footer</td><td>In review</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- 8. Pagination -->
+            <div class="part m-pager"
+                 data-label="Pagination"
+                 data-tag="&lt;nav aria-label=&quot;pagination&quot;&gt;"
+                 data-desc="Lets a long list be walked a page at a time. Mark the current page as more than just a colour, and keep previous and next as real links so they can be opened in a new tab like any other address.">
+              <span aria-hidden="true">‹</span>
+              <span class="on">1</span>
+              <span>2</span>
+              <span>3</span>
+              <span aria-hidden="true">›</span>
+            </div>
+
+            <!-- 9. Alert -->
+            <div class="part m-alert"
+                 data-label="Inline alert"
+                 data-tag="&lt;div role=&quot;alert&quot;&gt;"
+                 data-desc="A message attached to something already on the page. The alert role makes assistive tech announce it the instant it appears, which is why it belongs on real changes and not on decoration.">
+              <span class="m-alert-mark" aria-hidden="true">!</span>
+              <div>
+                <strong>Heads up</strong>
+                <div>A second card was left unlabelled on purpose — one annotated example teaches more than two.</div>
+              </div>
+            </div>
+
+            <!-- 10. Footer -->
+            <div class="part m-footer"
+                 data-label="Site footer"
+                 data-tag="&lt;footer&gt;"
+                 data-desc="The last band, and the one nobody scrolls to see — which is exactly what makes it useful. It catches everything that matters but did not earn a place in the header.">
+              <div class="m-footer-cols">
+                <div>
+                  <div class="m-logo">Anatomy</div>
+                  <div class="m-p">A labelled tour of an ordinary page.</div>
+                  <ul class="part m-social"
+                      data-label="Social links"
+                      data-tag="&lt;ul&gt;"
+                      data-desc="Off-site links. Each icon needs an accessible name of its own — a bare glyph is announced as nothing at all, and an icon is not a label.">
+                    <li>X</li><li>in</li><li>gh</li>
+                  </ul>
+                </div>
+                <div>
+                  <div class="m-foot-head">Product</div>
+                  <ul class="part m-foot-links"
+                      data-label="Footer navigation"
+                      data-tag="&lt;ul&gt; &lt;li&gt; &lt;a&gt;"
+                      data-desc="Secondary navigation, grouped under its own small heading. Crawlers follow these links, so the footer is worth curating rather than using as a bin for whatever would not fit above.">
+                    <li>Features</li><li>Pricing</li><li>Changelog</li>
+                  </ul>
+                </div>
+                <div>
+                  <div class="m-foot-head">Company</div>
+                  <ul class="m-foot-links">
+                    <li>About</li><li>Careers</li><li>Contact</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="part m-copy"
+                   data-label="Copyright line"
+                   data-tag="&lt;small&gt;"
+                   data-desc="Ownership, the year, and the two links every legal template asks for. This is the one place on a page where genuinely small print is the correct answer.">
+                <span>© 2026 Anatomy Labs</span>
+                <span>Privacy · Terms</span>
+              </div>
+            </div>
+
+            <!-- Floating control, absolutely positioned inside the page -->
+            <div class="part m-top-btn"
+                 data-label="Back to top"
+                 data-tag="&lt;button&gt;"
+                 data-desc="A floating control for long pages. It should appear only after the visitor has scrolled past the first screen, and it must never come to rest over the content underneath it."
+                 aria-hidden="true">↑</div>
+          </div>
+        </div>
+
+        <!-- One label, owned by the stage and moved by script — so it can
+             never be clipped by the mock's rounded frame. -->
+        <div class="probe-label" id="probeLabel" aria-hidden="true"></div>
+      </div>
+
+      <!-- Inspector -->
+      <aside class="anatomy-side">
+        <div class="anatomy-readout">
+          <div class="readout-head">
+            <span class="readout-num" id="readoutNum">–</span>
+            <code class="readout-tag" id="readoutTag" hidden></code>
+          </div>
+          <h2 class="readout-name" id="readoutName">Hover a region</h2>
+          <p class="readout-desc" id="readoutDesc">
+            Point at any part of the page and its name, element and purpose
+            will appear here.
+          </p>
+          <p class="readout-path" id="readoutPath" hidden></p>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Index, generated from the markup itself -->
+    <section class="anatomy-legend" id="legendSection" aria-labelledby="legendHeading">
+      <h2 class="anatomy-legend-title" id="legendHeading">Index of parts</h2>
+      <p class="anatomy-legend-sub">
+        Numbers match the labels on the page. Hover or focus one to light up
+        the part it names.
+      </p>
+      <div class="legend-grid" id="legendGrid"></div>
+    </section>
+
+    <div class="anatomy-panels">
+      <div class="anatomy-panel">
+        <h2>Containers and leaves</h2>
+        <p>
+          Most parts nest inside other parts, which is the whole point of the
+          faint inner rings — hover the button group and you can see it sitting
+          inside the hero. Only one part is ever strongly outlined: the smallest
+          one under the pointer.
+        </p>
+      </div>
+      <div class="anatomy-panel">
+        <h2>Same look, different element</h2>
+        <p>
+          Nothing on this page proves what an element is by looking at it. A
+          <code>&lt;button&gt;</code> and a <code>&lt;div&gt;</code> can be
+          pixel-identical; the difference is what the browser, the keyboard and
+          a screen reader can do with them.
+        </p>
+      </div>
+      <div class="anatomy-panel">
+        <h2>Everything in here is inert</h2>
+        <p>
+          The controls in the mock are stand-ins rather than real inputs — the
+          diagram is a picture of a page, so nothing inside it should be
+          focusable. The index above is real, and works with the keyboard.
+        </p>
+      </div>
+    </div>
+
+    <noscript>
+      <p class="anatomy-noscript">
+        JavaScript is switched off, so the hover labels and the index of parts
+        are unavailable — both are generated from the markup by the script at
+        the bottom of this page. The miniature page itself still renders
+        normally.
+      </p>
+    </noscript>
+  </main>
+
+  <!-- Reused unchanged. Every block in script.js guards the elements it
+       needs, so the loader and the matrix canvas simply return early here;
+       the labelling engine, the theme switch and the cursor run as normal. -->
+  <script src="script.js"></script>
+</body>
+</html>
